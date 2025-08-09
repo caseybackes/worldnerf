@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>NeRF WS Client</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 12px; }
+    #video { width: 80%; max-width: 960px; border: 1px solid #ddd; background: #000; }
+  </style>
+</head>
+<body>
+  <h3>NeRF WebSocket Client</h3>
+  <img id="video" alt="stream" />
+  <div>
+    <button id="btnConnect">Connect</button>
+    <button id="btnPose">Send Test Pose</button>
+    Width: <input id="w" value="640" type="number" />
+    Height: <input id="h" value="480" type="number" />
+    <label><input id="jpeg" type="checkbox" checked /> Receive JPEG over WS</label>
+  </div>
+
+  <script src="client.js"></script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+supervisord.log
+supervisord.pid
+gst_test/captures
+**/__pycache__/**

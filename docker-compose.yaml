@@ -1,0 +1,52 @@
+services:
+  nerf:
+    shm_size: "4gb"
+    ipc: host
+    image: worldnerf:latest
+    container_name: nerf
+    build:
+      context: .
+      dockerfile: Dockerfile
+    runtime: nvidia
+    volumes:
+      - .:/workspace
+    networks:
+      - nerfnet
+    expose:
+      - "5000/udp"
+    # Keep container running for testing even if no script is started
+    command: tail -f /dev/null
+
+  control:
+    shm_size: "2gb"
+    ipc: host
+    image: control:latest
+    container_name: control
+    build:
+      context: .
+      dockerfile: Dockerfile.ws
+    depends_on:
+      - nerf
+    volumes:
+      - .:/workspace
+    networks:
+      - nerfnet
+    ports:
+      - "9001:9001"  # WS Control API
+    environment:
+      # This lets control send RTP to nerf container
+      - WS_BIND_HOST=0.0.0.0
+      - WS_PORT=9001
+      - NERF_HOST=nerf
+      - NERF_RTP_PORT=5000
+
+    command: python3 /workspace/ws_server.py \
+      --host 0.0.0.0 --port 9001 \
+      --udp-host nerf \
+      --udp-port 5000
+
+
+
+networks:
+  nerfnet:
+    driver: bridge

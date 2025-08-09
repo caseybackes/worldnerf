@@ -1,0 +1,36 @@
+# mediamtx.yml
+logLevel: info
+
+# Where to store temporary files
+path: ./mediamtx_data
+
+# Enable RTSP on default port 8554
+rtsp: yes
+rtspPort: 8554
+
+# Enable RTMP (optional, for OBS or streaming services)
+rtmp: yes
+rtmpPort: 1935
+
+# Enable WebRTC for browser playback
+webrtc: yes
+webrtcPort: 8889
+webrtcEncryption: true
+
+# API & metrics
+api: yes
+apiAddress: :9997
+metrics: yes
+metricsAddress: :9998
+
+# Define streaming paths
+paths:
+  all:
+    publishUser: ""
+    publishPass: ""
+    readUser: ""
+    readPass: ""
+
+  nerfstream:
+    # Example: ffmpeg can push to rtsp://localhost:8554/nerfstream
+    source: publisher
